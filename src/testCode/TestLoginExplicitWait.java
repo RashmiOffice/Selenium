@@ -81,6 +81,7 @@ public class TestLoginExplicitWait {
             e.printStackTrace();
         } finally {
             // Close browser
+        	//Test
             driver.quit();
         }
     }
