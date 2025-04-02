@@ -2,17 +2,25 @@ package testCode;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class TestLoginExplicitWait {
-    public static void main(String args[]) {
+    @SuppressWarnings("deprecation")
+	public static void main(String args[]) {
         WebDriver driver;
         System.setProperty("webdriver.chrome.driver",
                 "C:\\Users\\rashm\\eclipse-workspace\\SeleniumUi\\Driver\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
@@ -38,11 +46,32 @@ public class TestLoginExplicitWait {
             // Wait for mobile input field and enter mobile number
             WebElement mobileInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id=':rb:']")));
             mobileInput.sendKeys("9830162522");
-            Thread.sleep(10000);
-            // Wait for Proceed button and click it
-            WebElement proceedButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='PROCEED']")));
+           Thread.sleep(10000);
+//            driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+//            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+         //    Wait for Proceed button and click it
+//           WebElement proceedButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='PROCEED']")));
+            WebElement proceedButton = driver.findElement(By.xpath("//button[normalize-space()='PROCEED']"));
             proceedButton.click();
-
+//            WebElement proceedButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[normalize-space()='PROCEED']")));
+//            WebElement proceedButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[normalize-space()='PROCEED']")));
+           
+//        wait.until(ExpectedConditions.elementToBeClickable(proceedButton)).click();
+            
+            
+        //  FluentWait<WebDriver> wait1 = null;
+			/**  WebDriverWait wait1 = new WebDriverWait(driver, Duration.ofSeconds(30));
+            wait1.pollingEvery(Duration.ofMillis(500));
+            // Check if element exists
+			List<WebElement> otpElements = driver.findElements(By.xpath("//*[contains(@class, 'otpScreen')]"));
+			if (otpElements.size() == 0) {
+			    System.out.println("OTP Screen not found in DOM.");
+			} else {
+			    System.out.println("OTP Screen found, waiting for visibility...");
+			    System.out.println("OTP Screen is now visible.");
+			}
+            **/
+            Thread.sleep(10000);
             // Wait for OTP screen to appear
             WebElement otpScreen = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@class, 'otpScreen')]")));
             System.out.println(otpScreen.getText());
@@ -71,14 +100,35 @@ public class TestLoginExplicitWait {
             js.executeScript("window.scrollBy(0,-500)");
 
             // Click on various buttons (Wait before each click)
-            String[] buttonNames = {"Temple", "Puja", "Chadhava", "Prasad", "Blog", "Darshan", "M R", "Logout", "Logout"};
-            for (String buttonName : buttonNames) {
-                WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='" + buttonName + "']")));
-                button.click();
+          //*[@id="root"]/div/div[2]/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div/div[2]/p
+            
+          //*[@class="links"]//a[contains(text(), 'Temple')]
+            
+            WebElement element = driver.findElement(By.xpath("//*[@id='root']//div[2]/div[2]//p"));
+            System.out.println(element.getText());
+            
+            List<WebElement> buttonNames = driver.findElements(By.xpath("//ul[@class=\"links\"]/li"));
+//            System.out.println(((WebElement) buttonNames).getText());
+            String[] menuNames1 = {"Home","Temple", "Puja", "Chadhava", "Prasad",  "Darshan", "Blog"};
+            for (int i = 0; i < buttonNames.size(); i++) {
+                
+                System.out.println("======in loop");
+                String title = buttonNames.get(i).getText();
+                if(title.equals(menuNames1[i])) {
+                	System.out.println(title + "exist");
+                }else {
+                	System.out.println(title + "does not exist");
+                }
+//                assert title.equals(menuNames1[i]) : "Title does not match!";
             }
+//            for (String buttonName : menuNames1) {
+//                WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='" + buttonName + "']")));
+//                button.click();
+//            }
 
-        } catch (Exception e) {
+         }catch (Exception e) {
             e.printStackTrace();
+            
         } finally {
             // Close browser
         	//Test
