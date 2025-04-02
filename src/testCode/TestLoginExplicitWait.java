@@ -38,39 +38,34 @@ public class TestLoginExplicitWait {
             // Launch the website
             driver.get("https://test.templedekho.com/");
 
+            // modify xpath using class and button
+//            WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+//                    "//body/div[@id='root']/div[@class='templeApp']/div[@class='MuiBox-root css-0']/div[@class='headerMainNav MuiBox-root css-0']/nav[@class='MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionFixed mui-fixed css-1vfuvx1']/nav[@class='headerContainer']/div[@class='MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 row d-flex align-items-center mainGrid css-isbt42']/div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-md-3 MuiGrid-grid-lg-3 MuiGrid-grid-xl-3 hdRightGrid css-wfj9yb']/div[@class='headerRight MuiBox-root css-0']
+            //     /div[@class='profileBlock MuiBox-root css-0']/a[@href='javascipt:void()']/button[1]")));
+            
             // Wait for Login button to be clickable and click it
-            WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
-                    "//body/div[@id='root']/div[@class='templeApp']/div[@class='MuiBox-root css-0']/div[@class='headerMainNav MuiBox-root css-0']/nav[@class='MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionFixed mui-fixed css-1vfuvx1']/nav[@class='headerContainer']/div[@class='MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 row d-flex align-items-center mainGrid css-isbt42']/div[@class='MuiGrid-root MuiGrid-item MuiGrid-grid-md-3 MuiGrid-grid-lg-3 MuiGrid-grid-xl-3 hdRightGrid css-wfj9yb']/div[@class='headerRight MuiBox-root css-0']/div[@class='profileBlock MuiBox-root css-0']/a[@href='javascipt:void()']/button[1]")));
+            WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'profileBlock')]//button[1]")));
             loginButton.click();
 
             // Wait for mobile input field and enter mobile number
             WebElement mobileInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id=':rb:']")));
             mobileInput.sendKeys("9830162522");
            Thread.sleep(10000);
+ //         implicit wait
 //            driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 //            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+           
          //    Wait for Proceed button and click it
 //           WebElement proceedButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='PROCEED']")));
             WebElement proceedButton = driver.findElement(By.xpath("//button[normalize-space()='PROCEED']"));
             proceedButton.click();
-//            WebElement proceedButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[normalize-space()='PROCEED']")));
-//            WebElement proceedButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[normalize-space()='PROCEED']")));
+          //*[@id="root"]/div/div[2]/div[1]/div/nav/nav/div[1]/div[3]/div/div[3]/a/button
            
 //        wait.until(ExpectedConditions.elementToBeClickable(proceedButton)).click();
             
             
-        //  FluentWait<WebDriver> wait1 = null;
-			/**  WebDriverWait wait1 = new WebDriverWait(driver, Duration.ofSeconds(30));
-            wait1.pollingEvery(Duration.ofMillis(500));
-            // Check if element exists
-			List<WebElement> otpElements = driver.findElements(By.xpath("//*[contains(@class, 'otpScreen')]"));
-			if (otpElements.size() == 0) {
-			    System.out.println("OTP Screen not found in DOM.");
-			} else {
-			    System.out.println("OTP Screen found, waiting for visibility...");
-			    System.out.println("OTP Screen is now visible.");
-			}
-            **/
+        
+			
             Thread.sleep(10000);
             // Wait for OTP screen to appear
             WebElement otpScreen = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@class, 'otpScreen')]")));
@@ -99,8 +94,6 @@ public class TestLoginExplicitWait {
             // Scroll up
             js.executeScript("window.scrollBy(0,-500)");
 
-            // Click on various buttons (Wait before each click)
-          //*[@id="root"]/div/div[2]/div[2]/div/div/div/div[2]/div/div[2]/div/div[1]/div/div[2]/p
             
           //*[@class="links"]//a[contains(text(), 'Temple')]
             
@@ -115,16 +108,13 @@ public class TestLoginExplicitWait {
                 System.out.println("======in loop");
                 String title = buttonNames.get(i).getText();
                 if(title.equals(menuNames1[i])) {
-                	System.out.println(title + "exist");
+                	System.out.println(title    +  " exist");
                 }else {
-                	System.out.println(title + "does not exist");
+                	System.out.println(title + "  does not exist");
                 }
-//                assert title.equals(menuNames1[i]) : "Title does not match!";
+               
             }
-//            for (String buttonName : menuNames1) {
-//                WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='" + buttonName + "']")));
-//                button.click();
-//            }
+            System.out.println("======out loop");
 
          }catch (Exception e) {
             e.printStackTrace();
